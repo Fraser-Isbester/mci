@@ -1,0 +1,36 @@
+name: check
+
+on: push
+
+env:
+  TERRAFORM_VERSION: 1.7.5
+
+jobs:
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: infra/terraform
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        name: Cache Plugin Directory
+        with:
+          path: ~/.tflint.d/plugins
+          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+      - uses: terraform-linters/setup-tflint@v4
+        name: Setup TFLint
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Validate
+        run: terraform validate
+      - name: Terraform Lint
+        run: tflint -f compact
+
