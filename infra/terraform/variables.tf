@@ -4,3 +4,10 @@ variable "project_id" {
   description = "The Google project id."
   type        = string
 }
+
+# The Google Cloud region.
+variable "region" {
+  description = "The Google Cloud region."
+  type        = string
+  default     = "us-west1"
+}
