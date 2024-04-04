@@ -33,4 +33,3 @@ jobs:
         run: terraform validate
       - name: Terraform Lint
         run: tflint -f compact
-
