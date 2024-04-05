@@ -2,7 +2,7 @@ module "gke" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/beta-autopilot-private-cluster"
   version = "~> 30"
 
-  project_id                      = data.google_project.project.project_id
+  project_id                      = data.google_project.main.project_id
   name                            = "control-cluster-001"
   regional                        = true
   region                          = var.region
@@ -17,7 +17,7 @@ module "gke" {
   deletion_protection             = false
   enable_cost_allocation          = true
   network_tags                    = ["gke", "control-cluster-001"]
-  fleet_project                   = data.google_project.project.project_id
+  fleet_project                   = data.google_project.main.project_id
 
   master_authorized_networks = [{
     cidr_block   = "10.60.0.0/17"

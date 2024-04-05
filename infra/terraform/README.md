@@ -2,9 +2,10 @@
 This Directory contains terraform that bootstraps the infrastructure. Most of the ifnrastructure is managed by by the Control Cluster.
 
 ## Bootstrapping the Infrastructure
-1. Create a new Google Cloud Project `gcloud projects create my-mci-project`
-1. Create a terraform.tfvars file in the infra/terraform directory with the following line: `project_id = "my-mci-project"`
-3. Run `terraform init` to initialize the terraform project
-4. Run `terraform apply` to create the infrastructure
-5. Update `main.tf` backend configuration to match your new GCS bucket
-6. Run `terraform init` again to reinitialize the project w/ the new backend configuration
+1. Create a new Org bound Google Cloud Project `gcloud projects create my-project`
+2. Enable Application Default Credentials `gcloud auth application-default login`
+3. Copy terraform.tfvars.in to terraform.tfvars and update the values. `cp terraform.tfvars.in terraform.tfvars`
+4. Run `terraform init` to initialize the terraform project
+5. Bootstrap the infrastructure
+    - `terraform apply --target google_project_service.project` to enable the required services (required for a complete apply)
+    - `terraform apply`

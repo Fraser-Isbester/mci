@@ -1,9 +1,9 @@
 locals {
-  network_name       = "${data.google_project.project.project_id}-network"
-  subnet_name        = "${data.google_project.project.project_id}-subnet"
-  master_subnet_name = "${data.google_project.project.project_id}-master-subnet"
-  pods_range_name    = "${data.google_project.project.project_id}-ip-range-pods"
-  svc_range_name     = "${data.google_project.project.project_id}-ip-range-svc"
+  network_name       = "${data.google_project.main.project_id}-network"
+  subnet_name        = "${data.google_project.main.project_id}-subnet"
+  master_subnet_name = "${data.google_project.main.project_id}-master-subnet"
+  pods_range_name    = "${data.google_project.main.project_id}-ip-range-pods"
+  svc_range_name     = "${data.google_project.main.project_id}-ip-range-svc"
   subnet_names       = [for subnet_self_link in module.gcp-network.subnets_self_links : split("/", subnet_self_link)[length(split("/", subnet_self_link)) - 1]]
 }
 
@@ -11,7 +11,7 @@ module "gcp-network" {
   source  = "terraform-google-modules/network/google"
   version = ">= 9.0"
 
-  project_id   = data.google_project.project.project_id
+  project_id   = data.google_project.main.project_id
   network_name = local.network_name
 
   subnets = [

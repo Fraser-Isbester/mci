@@ -1,0 +1,4 @@
+domain      = "" # Google Cloud Org. Domain (Required for IAP)
+admin_email = "" # Email of the GCP Admin (Required for IAP)
+project_id  = "" # Pre-existing GCP Project ID
+region      = "" # Desired deploymen region
